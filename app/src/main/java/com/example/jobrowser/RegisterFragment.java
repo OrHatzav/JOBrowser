@@ -106,16 +106,7 @@ public class RegisterFragment extends Fragment {
             }
             @Override
             public void afterTextChanged(Editable editable) {
-                if(password.getText().toString().length() >= 6)
-                {
-                    isClickable[1] = true;
-                }
-                else
-                {
-                    isClickable[1] = false;
-                }
-
-
+                isClickable[1] = password.getText().toString().length() >= 6;
             }
         });
 
