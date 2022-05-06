@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">JOBrowser</string>
+    <string name="create_post">יצירת פוסט</string>
+    <string name="get_posts">חיפוש פוסטים</string>
+    <string name="hello_blank_fragment">שלום ריק</string>
+    <string name="swipe_left_for_register">החלק שמאלה להרשמה</string>
+    <string name="login">התחבר</string>
+    <string name="password">סיסמה</string>
+    <string name="e_mail">מייל</string>
+    <string name="swipe_right_for_login">החלק ימינה להתחברות</string>
+    <string name="re_type_password">סיסמה פעם נוספת</string>
+    <string name="your_name">שם משתמש</string>
+    <string name="business">עסק</string>
+    <string name="worker">עובד</string>
+    <string name="btn_register">הירשם</string>
+    <string name="user_type">סוג משתמש:</string>
+    <string name="passwords_not_match">הסיסמאות לא תואמות</string>
+</resources>
