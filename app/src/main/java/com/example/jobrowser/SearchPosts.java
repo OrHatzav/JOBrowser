@@ -38,8 +38,6 @@ public class SearchPosts extends AppCompatActivity {
     private boolean[] areMarked;
     private Button search;
 
-    private Boolean isPressed = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,13 +45,18 @@ public class SearchPosts extends AppCompatActivity {
         container = findViewById(R.id.container);
         search = findViewById(R.id.search);
 
-        postRequest("1", url+ "/GetSubjects");
+//        postRequest("1", url+ "/GetSubjects");
+        ServerManager request = new ServerManager();
+        printInfo(request.getPosts("1","/GetSubjects"));
 
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                isPressed = true;
-                postRequest(packToSend(),url+ "/GetPosts");
+//                postRequest(packToSend(),url+ "/GetPosts");
+                Intent i = new Intent(SearchPosts.this, GetPosts.class);
+                i.putExtra("message", request.getPosts(packToSend(),"/GetPosts"));
+                startActivity(i);
+
             }
         });
 
@@ -64,62 +67,61 @@ public class SearchPosts extends AppCompatActivity {
         mediaType = MediaType.parse("text/plain");
         requestBody = RequestBody.create(postBodyString, mediaType);
         return requestBody;
-
     }
 
 
-    private void postRequest(String message, String URL) {
-
-        try {
-            RequestBody requestBody = buildRequestBody(message);
-            OkHttpClient okHttpClient = new OkHttpClient();
-            Request request = new Request
-                    .Builder()
-                    .post(requestBody)
-                    .url(URL)
-                    .build();
-            okHttpClient.newCall(request).enqueue(new Callback() {
-                @Override
-                public void onFailure(final Call call, final IOException e) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(SearchPosts.this, "Something went wrong:" + " " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
-                }
-
-                @Override
-                public void onResponse(Call call, final Response response) throws IOException {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                String answer = response.peekBody(2048).string();
-                                if(!isPressed)
-                                {
-                                    printInfo(answer);
-                                }
-                                else
-                                {
-                                    Intent i = new Intent(SearchPosts.this, GetPosts.class);
-                                    i.putExtra("message", answer);
-                                    startActivity(i);
-                                }
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-
-                    });
-                }
-            });
-        }
-        catch (Exception ex) {
-            Log.d("crash", "crash", ex);
-        }
-    }
+//    private void postRequest(String message, String URL) {
+//
+//        try {
+//            RequestBody requestBody = buildRequestBody(message);
+//            OkHttpClient okHttpClient = new OkHttpClient();
+//            Request request = new Request
+//                    .Builder()
+//                    .post(requestBody)
+//                    .url(URL)
+//                    .build();
+//            okHttpClient.newCall(request).enqueue(new Callback() {
+//                @Override
+//                public void onFailure(final Call call, final IOException e) {
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            Toast.makeText(SearchPosts.this, "Something went wrong:" + " " + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
+//
+//                }
+//
+//                @Override
+//                public void onResponse(Call call, final Response response) throws IOException {
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            try {
+//                                String answer = response.peekBody(2048).string();
+//                                if(!isPressed)
+//                                {
+//                                    printInfo(answer);
+//                                }
+//                                else
+//                                {
+//                                    Intent i = new Intent(SearchPosts.this, GetPosts.class);
+//                                    i.putExtra("message", answer);
+//                                    startActivity(i);
+//                                }
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//
+//                    });
+//                }
+//            });
+//        }
+//        catch (Exception ex) {
+//            Log.d("crash", "crash", ex);
+//        }
+//    }
 
 ////    //////////////
 
@@ -226,164 +228,5 @@ public class SearchPosts extends AppCompatActivity {
         Log.d("hh", paths);
         return paths;
     }
-
-//    private void markParents()
-//    {
-//        for(int i = 0;i<areMarked.length;i++)
-//        {
-//            if(areMarked[i] && array[i].isLeaf())
-//            {
-//                TreeNode parent = array[i].getParent();
-//                while(parent.getId() != root.getId())
-//                {
-////                   Log.d("hh", parent.getValue().toString());
-//                    for(int j = 0; j<array.length; j++)
-//                    {
-//                        if(array[j].getValue().toString().equals(parent.getValue().toString()))
-//                        {
-//                            areMarked[j] = true;
-//                            break;
-//                        }
-//                    }
-//                    parent = parent.getParent();
-//                }
-//            }
-//
-//        }
-////        removeNotMarked();
-//
-//    }
-//    private void removeNotMarked()
-//    {
-//        int counter = 0;
-//        for(int i = 0;i< areMarked.length;i++)
-//        {
-//            if(areMarked[i])
-//            {
-//                counter++;
-//            }
-//        }
-//
-//        TreeNode[] arrayToSend = new TreeNode[counter];
-//        String[] idsToSends = new String[counter];
-//        int index = 0;
-//        for(int i = 0; i< array.length;i++)
-//        {
-//            if(areMarked[i])
-//            {
-//                arrayToSend[index] = array[i];
-//                idsToSends[index] = ids[i];
-//                index++;
-//            }
-//        }
-//        array = arrayToSend;
-//        ids = idsToSends;
-//
-//    }
-//
-//    private String parentsToSend()
-//    {
-//        int counter = 0;
-//        for(int i = 0; i< array.length;i++)
-//        {
-//            if(ids[i].length() == 1)
-//            {
-//                counter++;
-//            }
-//        }
-//        TreeNode[] parents = new TreeNode[counter];
-//        int index = 0;
-//        for(int i = 0; i< array.length;i++)
-//        {
-//            if(ids[i].length() == 1)
-//            {
-//                parents[index] = array[i];
-//                index++;
-//            }
-//        }
-//        String send = "{";
-//        for(int i = 0;i< parents.length;i++)
-//        {
-//            for(int j = 0; j< array.length;j++)
-//            {
-//                if(array[j].getValue().toString().equals(parents[i].getValue().toString()))
-//                {
-//                    send += parents[i].getValue().toString() +":" + packToSend(parents[i]);
-//                    if(i == parents.length-1)
-//                    {
-//                        send+= ",";
-//                    }
-//                    break;
-//                }
-//            }
-//
-//        }
-//        send += "}";
-//        for(int i = 0; i<send.length()-1;i++)
-//        {
-//            if(send.charAt(i) == ',' && (send.charAt(i+1)== ']' || send.charAt(i+1) == '}'))
-//            {
-//                send = send.substring(0, i) + send.substring(i+1);
-//            }
-//        }
-//        return send;
-//
-//    }
-//
-//    private String packToSend(TreeNode parent)
-//    {
-//        if(parent.getChildren().get(0).isLeaf())
-//        {
-//            if(parent.getChildren().size() == 1) {
-//                for (int j = 0; j < array.length; j++) {
-//                    if (array[j].getValue().toString().equals(parent.getChildren().get(0).getValue().toString())) {
-//                        return parent.getChildren().get(0).getValue().toString();
-//                    }
-//
-//                }
-//            }
-//            String children = "[";
-//            for(int i = 0;i<parent.getChildren().size(); i++)
-//            {
-//                for(int j = 0; j< array.length;j++)
-//                {
-//                    if(array[j].getValue().toString().equals(parent.getChildren().get(i).getValue().toString()))
-//                    {
-//                        children += parent.getChildren().get(i).getValue().toString();
-//                        if(i<parent.getChildren().size()-1)
-//                        {
-//                            children +=",";
-//                        }
-//                        break;
-//                    }
-//                }
-//
-//            }
-//            children += "]";
-//            return children;
-//        }
-//        String children = "{";
-//        for(int i = 0; i<parent.getChildren().size(); i++)
-//        {
-//            for(int j = 0; j< array.length;j++)
-//            {
-//                if(array[j].getValue().toString().equals(parent.getChildren().get(i).getValue().toString()))
-//                {
-//                    children += parent.getChildren().get(i).getValue().toString() + ":" +
-//                            packToSend(parent.getChildren().get(i));
-//                    if(i < parent.getChildren().size()-1)
-//                    {
-//                        children += ",";
-//                    }
-//                    break;
-//                }
-//            }
-//
-//
-//
-//        }
-//        children += "}";
-//        return children;
-//    }
 
 }

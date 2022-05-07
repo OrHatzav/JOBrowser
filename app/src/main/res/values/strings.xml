@@ -18,4 +18,7 @@
     <string name="worker">Worker</string>
     <string name="user_type">User Type:</string>
     <string name="passwords_not_match">passwords do not match</string>
+    <string name="password_6_letters">Password must contain atleast six characters</string>
+    <string name="user_type_not_checked">User type is not checked</string>
+    <string name="post_uploaded">Post uploaded successfully!</string>
 </resources>

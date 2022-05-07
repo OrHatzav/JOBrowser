@@ -1,11 +1,11 @@
 package com.example.jobrowser;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,15 +13,30 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.Arrays;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link RegisterFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RegisterFragment extends Fragment {
+
+interface communcateFragment
+{
+    void getAnswer();
+}
+public class RegisterFragment extends Fragment{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -32,19 +47,15 @@ public class RegisterFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private String url = "http://" + "192.168.1.28" + ":" + 5000;
+    private String postBodyString;
+    private MediaType mediaType;
+    private RequestBody requestBody;
+
     public RegisterFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment fragment_register.
-     */
-    // TODO: Rename and change types and number of parameters
     public static RegisterFragment newInstance(String param1, String param2) {
         RegisterFragment fragment = new RegisterFragment();
         Bundle args = new Bundle();
@@ -76,85 +87,97 @@ public class RegisterFragment extends Fragment {
         EditText repassword = (EditText) view.findViewById(R.id.repassword);
         TextView notMatch = (TextView) view.findViewById(R.id.not_match);
 
-        register.setVisibility(View.INVISIBLE);
+//        register.setVisibility(View.INVISIBLE);
         final Boolean[] isClickable = new Boolean[4];
         Arrays.fill(isClickable, false);
 
-        password.addTextChangedListener(new TextWatcher() {
+        register.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-            @Override
-            public void afterTextChanged(Editable editable) {
-                isClickable[0] = true;
-            }
-        });
-
-        password.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-            @Override
-            public void afterTextChanged(Editable editable) {
-                isClickable[1] = password.getText().toString().length() >= 6;
-            }
-        });
-
-        repassword.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if(repassword.getText().toString().equals(password.getText().toString()))
+            public void onClick(View view) {
+                if(password.getText().toString().equals(repassword.getText().toString()))
                 {
-                    isClickable[2] = true;
-                    notMatch.setVisibility(View.INVISIBLE);
-                }
-                else
-                {
-                    if(repassword.getText().toString().length() > 0) {
-                        notMatch.setVisibility(View.VISIBLE);
+                    if(password.getText().toString().length()>= 6)
+                    {
+                        if(worker.isChecked() || business.isChecked())
+                        {
+
+                        }
+                        else
+                        {
+                            Toast.makeText(getContext(), getContext().getString(R.string.user_type_not_checked), Toast.LENGTH_SHORT).show();
+                        }
                     }
                     else
                     {
-                        notMatch.setVisibility(View.INVISIBLE);
+                        Toast.makeText(getContext(), getContext().getString(R.string.password_6_letters), Toast.LENGTH_SHORT).show();
                     }
-                    isClickable[2] = false;
                 }
-
+                else
+                {
+                    notMatch.setVisibility(View.VISIBLE);
+                }
             }
         });
 
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
-
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
         return view;
     }
+    public static void ToastMemoryShort (Context context, String msg) {
+
+        Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+        return;
+    }
+
+
+
+    private RequestBody buildRequestBody(String msg) {
+        postBodyString = msg;
+        mediaType = MediaType.parse("text/plain");
+        requestBody = RequestBody.create(postBodyString, mediaType);
+        return requestBody;
+    }
+
+
+//    private void postRequest(String message, String URL) {
+//
+//        try {
+//            RequestBody requestBody = buildRequestBody(message);
+//            OkHttpClient okHttpClient = new OkHttpClient();
+//            okhttp3.Request request = new Request
+//                    .Builder()
+//                    .post(requestBody)
+//                    .url(URL)
+//                    .build();
+//            okHttpClient.newCall(request).enqueue(new Callback() {
+//
+//                @Override
+//                public void onFailure(final Call call, final IOException e) {
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+////                            Toast.makeText(SignUp.class, "Something went wrong:" + " " + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
+//
+//                }
+//
+//                @Override
+//                public void onResponse(Call call, final Response response) throws IOException {
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            try {
+//                                String answer = response.peekBody(2048).string();
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//
+//                    });
+//                }
+//            });
+//        }
+//        catch (Exception ex) {
+//            Log.d("crash", "crash", ex);
+//        }
+//    }
 }

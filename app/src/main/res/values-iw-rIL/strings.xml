@@ -16,4 +16,7 @@
     <string name="btn_register">הירשם</string>
     <string name="user_type">סוג משתמש:</string>
     <string name="passwords_not_match">הסיסמאות לא תואמות</string>
+    <string name="password_6_letters">הסיסמה חייבת להכיל לפחות שישה תווים</string>
+    <string name="user_type_not_checked">סוג משתמש לא סומן</string>
+    <string name="post_uploaded">הפוסט עלה בהצלחה!</string>
 </resources>

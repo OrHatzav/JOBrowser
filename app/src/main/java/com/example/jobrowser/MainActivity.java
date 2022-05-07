@@ -31,12 +31,7 @@ import okhttp3.Response;
 import java.util.*;
 
 public class MainActivity extends AppCompatActivity {
-    private String url = "http://" + "192.168.219.17" + ":" + 5000 + "/GetSubjects";
-    private String postBodyString;
-    private MediaType mediaType;
-    private RequestBody requestBody;
     private Button connect;
-    private TextView text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +39,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         connect = findViewById(R.id.connect);
-        text = findViewById(R.id.text);
         connect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                postRequest("1", url);
-                Intent i = new Intent(MainActivity.this, SearchPosts.class);
+                Intent i = new Intent(MainActivity.this, UploadPost.class);
 //                switchActivityIntent.putExtra("message", "From: " + FirstActivity.class.getSimpleName());
                 startActivity(i);
             }
@@ -57,5 +51,4 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
 }

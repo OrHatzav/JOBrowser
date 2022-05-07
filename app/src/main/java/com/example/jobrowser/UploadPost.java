@@ -36,10 +36,6 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class UploadPost extends AppCompatActivity {
-    private String url = "http://" + "192.168.1.36" + ":" + 5000 + "/GetSubjects";
-    private String postBodyString;
-    private MediaType mediaType;
-    private RequestBody requestBody;
     private LinearLayout container;
 
     private TreeNode root = TreeNode.root();
@@ -55,7 +51,9 @@ public class UploadPost extends AppCompatActivity {
         container = findViewById(R.id.container);
         create = findViewById(R.id.create);
 
-        postRequest("1", url);
+        ServerManager request = new ServerManager();
+        printInfo(request.getPosts("1", "/GetSubjects"));
+//        postRequest("1", url);
 
         create.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +61,9 @@ public class UploadPost extends AppCompatActivity {
                 markParents();
                 String send = parentsToSend();
                 Log.d("hh", send);
-                postRequest(send, "http://" + "192.168.1.36" + ":" + 5000 + "/CreatePost");
+                request.getPosts(send, "/CreatePost");
+                Toast.makeText(UploadPost.this, UploadPost.this.getString(R.string.post_uploaded), Toast.LENGTH_SHORT).show();
+
             }
 
         });
@@ -71,57 +71,57 @@ public class UploadPost extends AppCompatActivity {
 
     }
 
-    private RequestBody buildRequestBody(String msg) {
-        postBodyString = msg;
-        mediaType = MediaType.parse("text/plain");
-        requestBody = RequestBody.create(postBodyString, mediaType);
-        return requestBody;
-    }
-
-
-    private void postRequest(String message, String URL) {
-
-        try {
-            RequestBody requestBody = buildRequestBody(message);
-            OkHttpClient okHttpClient = new OkHttpClient();
-            Request request = new Request
-                    .Builder()
-                    .post(requestBody)
-                    .url(URL)
-                    .build();
-            okHttpClient.newCall(request).enqueue(new Callback() {
-                @Override
-                public void onFailure(final Call call, final IOException e) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(UploadPost.this, "Something went wrong:" + " " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
-                }
-
-                @Override
-                public void onResponse(Call call, final Response response) throws IOException {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                String answer = response.peekBody(2048).string();
-                                printInfo(answer);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-
-                    });
-                }
-            });
-        }
-        catch (Exception ex) {
-            Log.d("crash", "crash", ex);
-        }
-    }
+//    private RequestBody buildRequestBody(String msg) {
+//        postBodyString = msg;
+//        mediaType = MediaType.parse("text/plain");
+//        requestBody = RequestBody.create(postBodyString, mediaType);
+//        return requestBody;
+//    }
+//
+//
+//    private void postRequest(String message, String URL) {
+//
+//        try {
+//            RequestBody requestBody = buildRequestBody(message);
+//            OkHttpClient okHttpClient = new OkHttpClient();
+//            Request request = new Request
+//                    .Builder()
+//                    .post(requestBody)
+//                    .url(URL)
+//                    .build();
+//            okHttpClient.newCall(request).enqueue(new Callback() {
+//                @Override
+//                public void onFailure(final Call call, final IOException e) {
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            Toast.makeText(UploadPost.this, "Something went wrong:" + " " + e.getMessage(), Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
+//
+//                }
+//
+//                @Override
+//                public void onResponse(Call call, final Response response) throws IOException {
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            try {
+//                                String answer = response.peekBody(2048).string();
+//                                printInfo(answer);
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//
+//                    });
+//                }
+//            });
+//        }
+//        catch (Exception ex) {
+//            Log.d("crash", "crash", ex);
+//        }
+//    }
 
 ////    //////////////
 
