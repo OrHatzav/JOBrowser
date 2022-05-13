@@ -1,6 +1,7 @@
 package com.example.jobrowser;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -32,10 +33,6 @@ import okhttp3.Response;
  * create an instance of this fragment.
  */
 
-interface communcateFragment
-{
-    void getAnswer();
-}
 public class RegisterFragment extends Fragment{
 
     // TODO: Rename parameter arguments, choose names that match
@@ -46,11 +43,6 @@ public class RegisterFragment extends Fragment{
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
-    private String url = "http://" + "192.168.1.28" + ":" + 5000;
-    private String postBodyString;
-    private MediaType mediaType;
-    private RequestBody requestBody;
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -82,7 +74,7 @@ public class RegisterFragment extends Fragment{
         Button register = (Button) view.findViewById(R.id.btn_register);
         RadioButton worker = (RadioButton) view.findViewById(R.id.worker);
         RadioButton business = (RadioButton) view.findViewById(R.id.business);
-        EditText username = (EditText) view.findViewById(R.id.username);
+        EditText email = (EditText) view.findViewById(R.id.email);
         EditText password = (EditText) view.findViewById(R.id.password);
         EditText repassword = (EditText) view.findViewById(R.id.repassword);
         TextView notMatch = (TextView) view.findViewById(R.id.not_match);
@@ -90,6 +82,8 @@ public class RegisterFragment extends Fragment{
 //        register.setVisibility(View.INVISIBLE);
         final Boolean[] isClickable = new Boolean[4];
         Arrays.fill(isClickable, false);
+        ServerManager request = new ServerManager();
+        SignUp signUp = new SignUp();
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,7 +94,15 @@ public class RegisterFragment extends Fragment{
                     {
                         if(worker.isChecked() || business.isChecked())
                         {
-
+                            String answer = request.getPosts(email.getText().toString(),"/EmailExists");
+                            if(answer == "True")
+                            {
+                                Toast.makeText(getContext(), getContext().getString(R.string.email_exist), Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                            {
+                                signUp.moveToCreateProfile(email.getText().toString(), password.getText().toString(), worker.isChecked());
+                            }
                         }
                         else
                         {
@@ -128,15 +130,15 @@ public class RegisterFragment extends Fragment{
     }
 
 
-
-    private RequestBody buildRequestBody(String msg) {
-        postBodyString = msg;
-        mediaType = MediaType.parse("text/plain");
-        requestBody = RequestBody.create(postBodyString, mediaType);
-        return requestBody;
-    }
-
-
+//
+//    private RequestBody buildRequestBody(String msg) {
+//        postBodyString = msg;
+//        mediaType = MediaType.parse("text/plain");
+//        requestBody = RequestBody.create(postBodyString, mediaType);
+//        return requestBody;
+//    }
+//
+//
 //    private void postRequest(String message, String URL) {
 //
 //        try {

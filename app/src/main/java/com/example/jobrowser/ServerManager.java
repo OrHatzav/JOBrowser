@@ -14,7 +14,7 @@ public class ServerManager extends AppCompatActivity {
 
     }
 
-    private final String SERVER_URL = "http://192.168.1.28:5000";
+    private final String SERVER_URL = "http://192.168.67.17:5000";
     private String postBodyString;
     private MediaType mediaType;
     private RequestBody requestBody;

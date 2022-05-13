@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import org.cactoos.func.Async;
@@ -49,5 +50,13 @@ public class SignUp extends AppCompatActivity {
         }
 }
 
+public void moveToCreateProfile(String email, String password, Boolean isWorker)
+{
+    Intent i = new Intent(this, CreateProfile.class);
+    i.putExtra("Email", email);
+    i.putExtra("password", password);
+    i.putExtra("isWorker", isWorker);
+    startActivity(i);
+}
 
 }

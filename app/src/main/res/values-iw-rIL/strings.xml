@@ -7,7 +7,7 @@
     <string name="swipe_left_for_register">החלק שמאלה להרשמה</string>
     <string name="login">התחבר</string>
     <string name="password">סיסמה</string>
-    <string name="e_mail">מייל</string>
+    <string name="e_mail">דוא\"ל</string>
     <string name="swipe_right_for_login">החלק ימינה להתחברות</string>
     <string name="re_type_password">סיסמה פעם נוספת</string>
     <string name="your_name">שם משתמש</string>
@@ -19,4 +19,5 @@
     <string name="password_6_letters">הסיסמה חייבת להכיל לפחות שישה תווים</string>
     <string name="user_type_not_checked">סוג משתמש לא סומן</string>
     <string name="post_uploaded">הפוסט עלה בהצלחה!</string>
+    <string name="email_exist">דוא\"ל קיים כבר</string>
 </resources>

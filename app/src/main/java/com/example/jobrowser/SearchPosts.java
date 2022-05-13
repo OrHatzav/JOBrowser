@@ -26,10 +26,6 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class SearchPosts extends AppCompatActivity {
-    private String url = "http://" + "192.168.1.28" + ":" + 5000;
-    private String postBodyString;
-    private MediaType mediaType;
-    private RequestBody requestBody;
     private LinearLayout container;
 
     private TreeNode root = TreeNode.root();
@@ -62,14 +58,14 @@ public class SearchPosts extends AppCompatActivity {
 
     }
 
-    private RequestBody buildRequestBody(String msg) {
-        postBodyString = msg;
-        mediaType = MediaType.parse("text/plain");
-        requestBody = RequestBody.create(postBodyString, mediaType);
-        return requestBody;
-    }
-
-
+//    private RequestBody buildRequestBody(String msg) {
+//        postBodyString = msg;
+//        mediaType = MediaType.parse("text/plain");
+//        requestBody = RequestBody.create(postBodyString, mediaType);
+//        return requestBody;
+//    }
+//
+//
 //    private void postRequest(String message, String URL) {
 //
 //        try {
