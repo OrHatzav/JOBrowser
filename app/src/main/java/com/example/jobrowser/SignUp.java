@@ -9,13 +9,18 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Intent;
 import android.os.Bundle;
 
-import org.cactoos.func.Async;
-
 import java.util.ArrayList;
-import java.util.concurrent.Future;
 
 public class SignUp extends AppCompatActivity {
 
+    public SignUp()
+    {
+
+    }
+    public String toString()
+    {
+        return "12314";
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,15 +53,6 @@ public class SignUp extends AppCompatActivity {
         void addFragmet(Fragment fragment) {
             fragmentList.add(fragment);
         }
-}
-
-public void moveToCreateProfile(String email, String password, Boolean isWorker)
-{
-    Intent i = new Intent(this, CreateProfile.class);
-    i.putExtra("Email", email);
-    i.putExtra("password", password);
-    i.putExtra("isWorker", isWorker);
-    startActivity(i);
 }
 
 }

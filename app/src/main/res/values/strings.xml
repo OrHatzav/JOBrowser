@@ -22,13 +22,38 @@
     <string name="user_type_not_checked">User type is not checked</string>
     <string name="post_uploaded">Post uploaded successfully!</string>
     <string name="email_exist">Email address already exists</string>
-    <string name="title_activity_create_profile">CreateProfile</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="welcome" translatable="false">Welcome</string>
+    <string name="business_name">Business Name (required):</string>
+    <string name="logo_link">Logo Link:</string>
+    <string name="business_locations">Locations of Business:</string>
+    <string name="office">Office</string>
+    <string name="lab">Laboratory</string>
+    <string name="factory">Factory</string>
+    <string name="work_home">Work from Home</string>
+
+    <string name="description">Description of Business:</string>
+    <string name="contact">Contacts:</string>
+    <string name="create_profile">Create Profile</string>
+    <string name="name_required">Business name is required</string>
+    <string name="sign_up_successfully">Signed up successfully</string>
+
+    <string name="first_name">First Name (required):</string>
+    <string name="last_name">Last Name (required):</string>
+    <string name="age">Age:</string>
+    <string name="residential_area">Residential Area:</string>
+
+
+
+
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label" translatable="false">First Fragment</string>
+    <string name="second_fragment_label" translatable="false">Second Fragment</string>
+    <string name="next" translatable="false">Next</string>
+    <string name="previous" translatable="false">Previous</string>
+
+    <string name="hello_first_fragment" translatable="false">Hello first fragment</string>
+    <string name="hello_second_fragment" translatable="false">Hello second fragment. Arg: %1$s</string>
+
+
 </resources>

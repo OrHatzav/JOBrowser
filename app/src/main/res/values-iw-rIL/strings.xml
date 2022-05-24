@@ -20,4 +20,18 @@
     <string name="user_type_not_checked">סוג משתמש לא סומן</string>
     <string name="post_uploaded">הפוסט עלה בהצלחה!</string>
     <string name="email_exist">דוא\"ל קיים כבר</string>
+    <string name="business_name">שם העסק (חובה):</string>
+    <string name="logo_link">קישור ללוגו:</string>
+    <string name="business_locations">מקומות של העסק:</string>
+    <string name="contact">צרו קשר:</string>
+    <string name="office">משרד</string>
+    <string name="lab">מעבדה</string>
+    <string name="factory">מפעל</string>
+    <string name="work_home">עבודה מהבית</string>
+    <string name="description">תיאור של העסק</string>
+    <string name="create_profile">יצירת פרופיל</string>
+    <string name="name_required">שם העסק הוא חובה</string>
+    <string name="sign_up_successfully">נרשם בהצלחה</string>
+    <string name="first_name">שם פרטי (חובה):</string>
+    <string name="last_name">שם משפחה (חובה):</string>
 </resources>

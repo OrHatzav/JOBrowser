@@ -27,6 +27,7 @@
         android:layout_marginLeft="25dp"
         android:layout_marginTop="40dp"
         android:fontFamily="@font/indigo_daisy"
+        android:textColor="@color/colorPrimary"
         android:gravity="left"
         android:text="@string/register"
         android:textSize="70sp"

@@ -44,8 +44,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 //                postRequest("1", url);
                 Intent i = new Intent(MainActivity.this, SignUp.class);
-//                switchActivityIntent.putExtra("message", "From: " + FirstActivity.class.getSimpleName());
+//                i.putExtra("message", "From: " + FirstActivity.class.getSimpleName());
                 startActivity(i);
+
             }
         });
 

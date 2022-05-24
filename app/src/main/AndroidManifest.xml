@@ -16,7 +16,10 @@
         android:theme="@style/Theme.JOBrowser"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".CreateProfile"
+            android:name=".CreateWorkerProfile"
+            android:exported="false" />
+        <activity
+            android:name=".CreateBusinessProfile"
             android:exported="false" />
         <activity
             android:name=".SignUp"

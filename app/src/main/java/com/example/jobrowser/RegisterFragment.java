@@ -80,10 +80,7 @@ public class RegisterFragment extends Fragment{
         TextView notMatch = (TextView) view.findViewById(R.id.not_match);
 
 //        register.setVisibility(View.INVISIBLE);
-        final Boolean[] isClickable = new Boolean[4];
-        Arrays.fill(isClickable, false);
         ServerManager request = new ServerManager();
-        SignUp signUp = new SignUp();
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,13 +92,25 @@ public class RegisterFragment extends Fragment{
                         if(worker.isChecked() || business.isChecked())
                         {
                             String answer = request.getPosts(email.getText().toString(),"/EmailExists");
-                            if(answer == "True")
+                            if(answer.equals("1"))
                             {
                                 Toast.makeText(getContext(), getContext().getString(R.string.email_exist), Toast.LENGTH_SHORT).show();
                             }
                             else
                             {
-                                signUp.moveToCreateProfile(email.getText().toString(), password.getText().toString(), worker.isChecked());
+                                Intent i;
+                                if(worker.isChecked())
+                                {
+                                    i = new Intent(getActivity(), CreateBusinessProfile.class);
+                                }
+                                else
+                                {
+                                    i = new Intent(getActivity(), CreateWorkerProfile.class);
+                                }
+                                i.putExtra("email", email.getText().toString());
+                                i.putExtra("password", password.getText().toString());
+                                startActivity(i);
+                                getActivity().finish();
                             }
                         }
                         else
