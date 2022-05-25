@@ -16,6 +16,9 @@
         android:theme="@style/Theme.JOBrowser"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ProfilePage"
+            android:exported="false" />
+        <activity
             android:name=".CreateWorkerProfile"
             android:exported="false" />
         <activity

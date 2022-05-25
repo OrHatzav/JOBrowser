@@ -71,15 +71,14 @@ public class RegisterFragment extends Fragment{
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_register, container, false);
 
-        Button register = (Button) view.findViewById(R.id.btn_register);
-        RadioButton worker = (RadioButton) view.findViewById(R.id.worker);
-        RadioButton business = (RadioButton) view.findViewById(R.id.business);
-        EditText email = (EditText) view.findViewById(R.id.email);
-        EditText password = (EditText) view.findViewById(R.id.password);
-        EditText repassword = (EditText) view.findViewById(R.id.repassword);
-        TextView notMatch = (TextView) view.findViewById(R.id.not_match);
+        Button register = view.findViewById(R.id.btn_register);
+        RadioButton worker =  view.findViewById(R.id.worker);
+        RadioButton business = view.findViewById(R.id.business);
+        EditText email = view.findViewById(R.id.email);
+        EditText password = view.findViewById(R.id.password);
+        EditText repassword = view.findViewById(R.id.repassword);
+        TextView notMatch = view.findViewById(R.id.not_match);
 
-//        register.setVisibility(View.INVISIBLE);
         ServerManager request = new ServerManager();
 
         register.setOnClickListener(new View.OnClickListener() {
@@ -92,14 +91,15 @@ public class RegisterFragment extends Fragment{
                         if(worker.isChecked() || business.isChecked())
                         {
                             String answer = request.getPosts(email.getText().toString(),"/EmailExists");
-                            if(answer.equals("1"))
+                            Log.d("hh", answer);
+                            if(answer.equals("true"))
                             {
                                 Toast.makeText(getContext(), getContext().getString(R.string.email_exist), Toast.LENGTH_SHORT).show();
                             }
                             else
                             {
                                 Intent i;
-                                if(worker.isChecked())
+                                if(business.isChecked())
                                 {
                                     i = new Intent(getActivity(), CreateBusinessProfile.class);
                                 }

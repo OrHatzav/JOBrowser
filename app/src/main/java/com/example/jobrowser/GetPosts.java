@@ -7,8 +7,11 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.base.Splitter;
 import com.unnamed.b.atv.model.TreeNode;
@@ -27,6 +30,9 @@ public class GetPosts extends AppCompatActivity {
     private TreeNode[] array;
     private String[] ids;
 
+    ServerManager request = new ServerManager();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,9 +44,7 @@ public class GetPosts extends AppCompatActivity {
 
         try {
             ArrayList<String> arrayList = jsonStringToArray(value);
-            Log.d("hh", arrayList.get(0).toString());
-            for(int i = 0; i< arrayList.size();i++)
-            {
+            for(int i = 0; i< arrayList.size();i++) {
                 printInfo(String.valueOf(arrayList.get(i)));
             }
 
@@ -107,6 +111,7 @@ public class GetPosts extends AppCompatActivity {
             }
         }
 
+
         LinearLayout layout = new LinearLayout(this);
         container.addView(layout);
         layout.setBackgroundResource(R.color.white);
@@ -118,6 +123,17 @@ public class GetPosts extends AppCompatActivity {
         params.weight = 1.0f;
         params.gravity = Gravity.CENTER;
         layout.setLayoutParams(params);
+
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                for(int i = 0 ;i<array.length;i++)
+//                {
+//                    if(array[i].getValue().toString().equals("_"))
+//                }
+//                request.getPosts()
+            }
+        });
 
         AndroidTreeView tView = new AndroidTreeView(this, root);
         tView.setDefaultAnimation(true);

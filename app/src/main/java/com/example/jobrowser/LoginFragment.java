@@ -1,13 +1,22 @@
 package com.example.jobrowser;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.base.Splitter;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -15,6 +24,10 @@ import android.widget.Button;
  * create an instance of this fragment.
  */
 public class LoginFragment extends Fragment {
+
+    private EditText email;
+    private EditText password;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -61,12 +74,44 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
-        Button login = (Button) view.findViewById(R.id.btn_login);
+        Button login = view.findViewById(R.id.btn_login);
+        email = view.findViewById(R.id.email);
+        password = view.findViewById(R.id.password);
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ServerManager request = new ServerManager();
+                String answer = request.getPosts("{\"email\": \"" + email.getText().toString() + "\", \"password\": \""+ password.getText().toString() + "\"}", "/SignIn");
+                if(answer.equals("false"))
+                {
+                    Toast.makeText(getContext(), getContext().getString(R.string.email_or_password), Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Map<String, String> properties = Splitter.on(", ")
+                            .withKeyValueSeparator(": ")
+                            .split(answer);
 
+                    boolean isFound = false;
+                    for (Map.Entry<String, String> entry : properties.entrySet()) {
+                        if (entry.getKey().equals("BusinessName"))
+                        {
+                            isFound = true;
+                        }
+
+                        if(entry.getKey().equals("_id"))
+                        {
+                            request.setClientID(answer.substring(2,answer.length()-1));
+                        }
+                    }
+                    request.setIsBusiness(isFound);
+
+                    Intent i = new Intent(getActivity(), ProfilePage.class);
+                    i.putExtra("profile", answer);
+                    startActivity(i);
+                    getActivity().finish();
+                }
             }
         });
         return view;

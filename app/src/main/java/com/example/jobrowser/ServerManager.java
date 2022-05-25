@@ -13,8 +13,29 @@ public class ServerManager extends AppCompatActivity {
     public ServerManager() {
 
     }
+    private String clientID;
+    private boolean isBusiness;
+    public void setClientID(String id)
+    {
+        this.clientID = id;
+    }
 
-    private final String SERVER_URL = "http://192.168.1.28:5000";
+    public String getClientID()
+    {
+        return clientID;
+    }
+/////////////
+    public void setIsBusiness(boolean isBusiness)
+    {
+        this.isBusiness = isBusiness;
+    }
+
+    public boolean getIsBusiness()
+    {
+        return isBusiness;
+    }
+
+    private final String SERVER_URL = "http://192.168.75.17:5000";
     private String postBodyString;
     private MediaType mediaType;
     private RequestBody requestBody;

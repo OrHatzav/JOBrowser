@@ -37,13 +37,12 @@
     <string name="create_profile">Create Profile</string>
     <string name="name_required">Business name is required</string>
     <string name="sign_up_successfully">Signed up successfully</string>
+    <string name="email_or_password">Email or password do not exist</string>
 
     <string name="first_name">First Name (required):</string>
     <string name="last_name">Last Name (required):</string>
-    <string name="age">Age:</string>
-    <string name="residential_area">Residential Area:</string>
-
-
+    <!--    <string name="age">Age:</string>-->
+    <!--    <string name="residential_area">Residential Area:</string>-->
 
 
     <!-- Strings used for fragments for navigation -->

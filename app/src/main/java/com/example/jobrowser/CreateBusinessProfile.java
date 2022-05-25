@@ -4,11 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.base.Splitter;
+
+import java.util.Map;
 
 public class CreateBusinessProfile extends AppCompatActivity {
 
@@ -26,7 +31,7 @@ public class CreateBusinessProfile extends AppCompatActivity {
     private CheckBox lab;
     private CheckBox factory;
     private CheckBox work_home;
-    Bundle extras = getIntent().getExtras();
+    private EditText description;
     ServerManager request = new ServerManager();
 
 
@@ -41,51 +46,69 @@ public class CreateBusinessProfile extends AppCompatActivity {
         lab = findViewById(R.id.lab);
         factory = findViewById(R.id.factory);
         work_home = findViewById(R.id.work_home);
+        description = findViewById(R.id.description);
+
+        Bundle extras = getIntent().getExtras();
+
 
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(name.getText().toString().length() > 0)
                 {
-                    String subjects = "{ BusinessName: " + name;
+                    String subjects = "{\"BusinessName\": " + "\""+name.getText().toString() + "\"";
 
                     String locations = "";
                     if(office.isChecked())
                     {
-                        locations += office.getText().toString();
+                        locations += "\""+ office.getText().toString()+ "\"";
                     }
                     if(lab.isChecked())
                     {
                         if(locations.length()>0) {
                             locations += ", ";
                         }
-                        locations += lab;
+                        locations += "\""+ lab.getText().toString() + "\"";
                     }
                     if(factory.isChecked())
                     {
                         if(locations.length()>0) {
                             locations += ", ";
                         }
-                        locations += factory;
+                        locations += "\""+ factory.getText().toString()+ "\"";
                     }
                     if(work_home.isChecked())
                     {
                         if(locations.length()>0) {
                             locations += ", ";
                         }
-                        locations += work_home;
+                        locations += "\""+work_home.getText().toString() + "\"";
                     }
 
-                    subjects += ", locations: {["+ locations + "]}";
+                    subjects += ", \"locations\": ["+ locations + "]";
+                    subjects += ", \"description\": \"" + description.getText().toString() + "\"}";
                     String email = extras.getString("email");
                     String password = extras.getString("password");
-                    String id = request.getPosts("["+email+", "+password + ", "+subjects + ", 1]", "/CreateProfile");
-
+                    String answer = request.getPosts("{\"NewProfile\": [\""+email+"\", \""+password + "\","+subjects + ", \"1\"]}", "/CreateProfile");
+                    request.setIsBusiness(true);
                     Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.sign_up_successfully), Toast.LENGTH_SHORT).show();
 
-                    Intent i = new Intent(CreateBusinessProfile.this, UploadPost.class);
-                    i.putExtra("id", id);
+
+                    Map<String, String> properties = Splitter.on(", ")
+                            .withKeyValueSeparator(": ")
+                            .split(answer);
+
+                    for (Map.Entry<String, String> entry : properties.entrySet()) {
+                        if(entry.getKey().equals("_id"))
+                        {
+                            request.setClientID(answer.substring(2,answer.length()-1));
+                        }
+                    }
+                    Log.d("hh", answer);
+                    Intent i = new Intent(CreateBusinessProfile.this, ProfilePage.class);
+                    i.putExtra("profile", answer);
                     startActivity(i);
+                    finish();
                 }
                 else
                 {

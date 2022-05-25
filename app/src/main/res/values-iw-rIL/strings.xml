@@ -34,4 +34,5 @@
     <string name="sign_up_successfully">נרשם בהצלחה</string>
     <string name="first_name">שם פרטי (חובה):</string>
     <string name="last_name">שם משפחה (חובה):</string>
+    <string name="email_or_password">דוא\"ל או סיסמה לא קיימים</string>
 </resources>
