@@ -32,6 +32,7 @@
     <string name="factory">Factory</string>
     <string name="work_home">Work from Home</string>
 
+
     <string name="description">Description of Business:</string>
     <string name="contact">Contacts:</string>
     <string name="create_profile">Create Profile</string>
@@ -45,6 +46,11 @@
     <!--    <string name="residential_area">Residential Area:</string>-->
 
 
+    <string name="search">Search</string>
+    <string name="profile">Profile</string>
+    <string name="upload">Upload</string>
+
+
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label" translatable="false">First Fragment</string>
     <string name="second_fragment_label" translatable="false">Second Fragment</string>
@@ -53,6 +59,9 @@
 
     <string name="hello_first_fragment" translatable="false">Hello first fragment</string>
     <string name="hello_second_fragment" translatable="false">Hello second fragment. Arg: %1$s</string>
+
+    <string name="Open" translatable="false">Open</string>
+    <string name="Close" translatable="false">Close</string>
 
 
 </resources>

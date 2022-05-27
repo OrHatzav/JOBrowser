@@ -81,36 +81,46 @@ public class LoginFragment extends Fragment {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ServerManager request = new ServerManager();
-                String answer = request.getPosts("{\"email\": \"" + email.getText().toString() + "\", \"password\": \""+ password.getText().toString() + "\"}", "/SignIn");
-                if(answer.equals("false"))
-                {
-                    Toast.makeText(getContext(), getContext().getString(R.string.email_or_password), Toast.LENGTH_SHORT).show();
+                if (email.getText().toString().length() > 0 && password.getText().toString().length() >= 6) {
+
+                    ServerManager request = new ServerManager();
+                    String answer = request.getPosts("{\"email\": \"" + email.getText().toString() + "\", \"password\": \"" + password.getText().toString() + "\"}", "/SignIn");
+                    if (answer.equals("false")) {
+                        Toast.makeText(getContext(), getContext().getString(R.string.email_or_password), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Map<String, String> properties = Splitter.on(", ")
+                                .withKeyValueSeparator(": ")
+                                .split(answer);
+
+                        boolean isFound = false;
+                        int index = 0;
+                        for (Map.Entry<String, String> entry : properties.entrySet()) {
+
+                            if (entry.getKey().equals("\"businessName\"")) {
+                                isFound = true;
+                            }
+
+                            if (index == 0) {
+                                request.setClientID(entry.getValue().substring(1, entry.getValue().length() - 1));
+                            }
+                            index++;
+                        }
+                        request.setIsBusiness(isFound);
+                        Intent i;
+                        if (isFound) {
+                            i = new Intent(getActivity(), MainActivity.class);
+                        } else {
+                            i = new Intent(getActivity(), MainActivity2.class);
+                        }
+                        i.putExtra("profile", answer);
+                        startActivity(i);
+                        getActivity().finish();
+                    }
                 }
                 else
                 {
-                    Map<String, String> properties = Splitter.on(", ")
-                            .withKeyValueSeparator(": ")
-                            .split(answer);
+                    Toast.makeText(getContext(), getContext().getString(R.string.email_or_password), Toast.LENGTH_SHORT).show();
 
-                    boolean isFound = false;
-                    for (Map.Entry<String, String> entry : properties.entrySet()) {
-                        if (entry.getKey().equals("BusinessName"))
-                        {
-                            isFound = true;
-                        }
-
-                        if(entry.getKey().equals("_id"))
-                        {
-                            request.setClientID(answer.substring(2,answer.length()-1));
-                        }
-                    }
-                    request.setIsBusiness(isFound);
-
-                    Intent i = new Intent(getActivity(), ProfilePage.class);
-                    i.putExtra("profile", answer);
-                    startActivity(i);
-                    getActivity().finish();
                 }
             }
         });

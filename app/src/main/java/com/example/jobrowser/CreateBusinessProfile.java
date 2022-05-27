@@ -4,16 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.base.Splitter;
-
-import java.util.Map;
+import com.google.gson.Gson;
 
 public class CreateBusinessProfile extends AppCompatActivity {
 
@@ -56,57 +53,39 @@ public class CreateBusinessProfile extends AppCompatActivity {
             public void onClick(View view) {
                 if(name.getText().toString().length() > 0)
                 {
-                    String subjects = "{\"BusinessName\": " + "\""+name.getText().toString() + "\"";
-
-                    String locations = "";
+                    String checkBox = "";
                     if(office.isChecked())
                     {
-                        locations += "\""+ office.getText().toString()+ "\"";
+                       checkBox += "1";
                     }
                     if(lab.isChecked())
                     {
-                        if(locations.length()>0) {
-                            locations += ", ";
-                        }
-                        locations += "\""+ lab.getText().toString() + "\"";
+                        checkBox += "2";
                     }
                     if(factory.isChecked())
                     {
-                        if(locations.length()>0) {
-                            locations += ", ";
-                        }
-                        locations += "\""+ factory.getText().toString()+ "\"";
+                        checkBox += "3";
                     }
                     if(work_home.isChecked())
                     {
-                        if(locations.length()>0) {
-                            locations += ", ";
-                        }
-                        locations += "\""+work_home.getText().toString() + "\"";
+                        checkBox += "4";
                     }
+//TODO: subjects cannot be sent properly to server
+                    Gson gson = new Gson();
+                    BusinessProfile profile = new BusinessProfile(name.getText().toString(), office.isChecked(), lab.isChecked(),
+                            factory.isChecked(), work_home.isChecked(), description.getText().toString());
+                    String json = gson.toJson(profile);
+//                    Profile json = gson.fromJson("", (Type) Profile.class);
 
-                    subjects += ", \"locations\": ["+ locations + "]";
-                    subjects += ", \"description\": \"" + description.getText().toString() + "\"}";
                     String email = extras.getString("email");
                     String password = extras.getString("password");
-                    String answer = request.getPosts("{\"NewProfile\": [\""+email+"\", \""+password + "\","+subjects + ", \"1\"]}", "/CreateProfile");
+                    String answer = request.getPosts("{\"NewProfile\": [\""+email+"\", \""+password + "\","+json + ", \"1\"]}", "/CreateProfile");
                     request.setIsBusiness(true);
+                    request.setClientID(answer.substring(2,answer.length()-1));
                     Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.sign_up_successfully), Toast.LENGTH_SHORT).show();
-
-
-                    Map<String, String> properties = Splitter.on(", ")
-                            .withKeyValueSeparator(": ")
-                            .split(answer);
-
-                    for (Map.Entry<String, String> entry : properties.entrySet()) {
-                        if(entry.getKey().equals("_id"))
-                        {
-                            request.setClientID(answer.substring(2,answer.length()-1));
-                        }
-                    }
-                    Log.d("hh", answer);
-                    Intent i = new Intent(CreateBusinessProfile.this, ProfilePage.class);
-                    i.putExtra("profile", answer);
+//TODO: pass profile to profile fragment
+                    Intent i = new Intent(CreateBusinessProfile.this, MainActivity.class);
+//                    i.putExtra("profile", answer);
                     startActivity(i);
                     finish();
                 }

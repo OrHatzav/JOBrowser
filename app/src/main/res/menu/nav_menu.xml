@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/ic_upload"
+        android:icon="@drawable/ic_baseline_file_upload_24"
+        android:title="@string/upload"/>
+
+    <item
+        android:id="@+id/ic_profile"
+        android:icon="@drawable/ic_baseline_account_circle_24"
+        android:title="@string/profile"/>
+</menu>

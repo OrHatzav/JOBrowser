@@ -35,4 +35,7 @@
     <string name="first_name">שם פרטי (חובה):</string>
     <string name="last_name">שם משפחה (חובה):</string>
     <string name="email_or_password">דוא\"ל או סיסמה לא קיימים</string>
+    <string name="search">חיפוש</string>
+    <string name="profile">פרופיל</string>
+    <string name="upload">העלאה</string>
 </resources>

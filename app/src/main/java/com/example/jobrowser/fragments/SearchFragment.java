@@ -1,32 +1,35 @@
-package com.example.jobrowser;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.jobrowser.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
+import com.example.jobrowser.GetPosts;
+import com.example.jobrowser.R;
+import com.example.jobrowser.SearchPosts;
+import com.example.jobrowser.ServerManager;
 import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.base.Splitter;
 import com.unnamed.b.atv.model.TreeNode;
 import com.unnamed.b.atv.view.AndroidTreeView;
 
-import java.io.IOException;
 import java.util.Map;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link SearchFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class SearchFragment extends Fragment {
 
-public class SearchPosts extends AppCompatActivity {
-    private LinearLayout container;
+    private LinearLayout contain;
 
     private TreeNode root = TreeNode.root();
     private TreeNode[] array;
@@ -34,12 +37,56 @@ public class SearchPosts extends AppCompatActivity {
     private boolean[] areMarked;
     private Button search;
 
+
+
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
+
+    public SearchFragment() {
+        // Required empty public constructor
+    }
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment SearchFragment.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static SearchFragment newInstance(String param1, String param2) {
+        SearchFragment fragment = new SearchFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_posts);
-        container = findViewById(R.id.container);
-        search = findViewById(R.id.search);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_search, container, false);
+
+        contain = view.findViewById(R.id.container);
+        search = view.findViewById(R.id.search);
 
         ServerManager request = new ServerManager();
         printInfo(request.getPosts("1","/GetSubjects"));
@@ -48,77 +95,17 @@ public class SearchPosts extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 //                postRequest(packToSend(),url+ "/GetPosts");
-                Intent i = new Intent(SearchPosts.this, GetPosts.class);
-                i.putExtra("message", request.getPosts(packToSend(),"/GetPosts"));
-                startActivity(i);
+                if(array.length > 0) {
+                    Intent i = new Intent(getActivity(), GetPosts.class);
+                    i.putExtra("message", request.getPosts(packToSend(), "/GetPosts"));
+                    startActivity(i);
+                }
 
             }
         });
 
+        return view;
     }
-
-//    private RequestBody buildRequestBody(String msg) {
-//        postBodyString = msg;
-//        mediaType = MediaType.parse("text/plain");
-//        requestBody = RequestBody.create(postBodyString, mediaType);
-//        return requestBody;
-//    }
-//
-//
-//    private void postRequest(String message, String URL) {
-//
-//        try {
-//            RequestBody requestBody = buildRequestBody(message);
-//            OkHttpClient okHttpClient = new OkHttpClient();
-//            Request request = new Request
-//                    .Builder()
-//                    .post(requestBody)
-//                    .url(URL)
-//                    .build();
-//            okHttpClient.newCall(request).enqueue(new Callback() {
-//                @Override
-//                public void onFailure(final Call call, final IOException e) {
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            Toast.makeText(SearchPosts.this, "Something went wrong:" + " " + e.getMessage(), Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
-//
-//                }
-//
-//                @Override
-//                public void onResponse(Call call, final Response response) throws IOException {
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            try {
-//                                String answer = response.peekBody(2048).string();
-//                                if(!isPressed)
-//                                {
-//                                    printInfo(answer);
-//                                }
-//                                else
-//                                {
-//                                    Intent i = new Intent(SearchPosts.this, GetPosts.class);
-//                                    i.putExtra("message", answer);
-//                                    startActivity(i);
-//                                }
-//                            } catch (IOException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//
-//                    });
-//                }
-//            });
-//        }
-//        catch (Exception ex) {
-//            Log.d("crash", "crash", ex);
-//        }
-//    }
-
-////    //////////////
 
 
     private void printInfo(String answer)
@@ -156,9 +143,9 @@ public class SearchPosts extends AppCompatActivity {
             }
         }
 
-        AndroidTreeView tView = new AndroidTreeView(this, root);
+        AndroidTreeView tView = new AndroidTreeView(getContext(), root);
         tView.setDefaultAnimation(true);
-        container.addView(tView.getView());
+        contain.addView(tView.getView());
 
         listeners();
     }

@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SearchPosts">
+    tools:context=".fragments.UploadFragment">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,13 +24,13 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/search"
+            android:id="@+id/create"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_marginBottom="10dp"
-            android:text="@string/get_posts" />
+            android:text="@string/create_post"
+            android:layout_marginBottom="10dp"/>
 
     </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
+</RelativeLayout>

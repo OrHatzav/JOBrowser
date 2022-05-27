@@ -19,9 +19,10 @@ public class ProfilePage extends AppCompatActivity {
         setContentView(R.layout.activity_profile_page);
         listView =findViewById(R.id.ListViewID);
 
+        ServerManager request = new ServerManager();
         Bundle extras = getIntent().getExtras();
+        String answer = request.getPosts(extras.getString("id"), "/GetProfile");
 
-        String answer = extras.getString("profile");
         Map<String, String> properties = Splitter.on(", ")
                 .withKeyValueSeparator(": ")
                 .split(answer);
@@ -42,7 +43,7 @@ public class ProfilePage extends AppCompatActivity {
 
         }
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>
                 (this, android.R.layout.simple_list_item_1, info);
         listView.setDivider(null);
         // DataBind ListView with items from ArrayAdapter

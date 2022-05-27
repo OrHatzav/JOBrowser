@@ -3,6 +3,7 @@ package com.example.jobrowser;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,9 +30,6 @@ public class GetPosts extends AppCompatActivity {
 
     private TreeNode[] array;
     private String[] ids;
-
-    ServerManager request = new ServerManager();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +72,6 @@ public class GetPosts extends AppCompatActivity {
 
     private void printInfo(String answer)
     {
-        Log.d("hh", answer);
         TreeNode root = TreeNode.root();
 
         answer = answer.substring(1, answer.length() -1);
@@ -124,20 +121,27 @@ public class GetPosts extends AppCompatActivity {
         params.gravity = Gravity.CENTER;
         layout.setLayoutParams(params);
 
-        layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                for(int i = 0 ;i<array.length;i++)
-//                {
-//                    if(array[i].getValue().toString().equals("_"))
-//                }
-//                request.getPosts()
-            }
-        });
 
         AndroidTreeView tView = new AndroidTreeView(this, root);
         tView.setDefaultAnimation(true);
         layout.addView(tView.getView());
+//TODO: make when press go to ProfilePage activity
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                for(int i = 0 ;i<array.length;i++)
+                {
+                    if(array[i].getValue().toString().equals("Business ID"))
+                    {
+                        Intent intent = new Intent(GetPosts.this, ProfilePage.class);
+                        intent.putExtra("id", ids[i] + "1");
+                        startActivity(intent);
+                        finish();
+                    }
+                }
+            }
+        });
 
     }
 

@@ -11,6 +11,9 @@
         <entry key="..\:/Users/Or/AndroidStudioProjects/JOBrowser/app/src/main/res/drawable/ic_arrow_drop_up.xml" value="0.1" />
         <entry key="..\:/Users/Or/AndroidStudioProjects/JOBrowser/app/src/main/res/drawable/ic_arrow_left.xml" value="0.1" />
         <entry key="..\:/Users/Or/AndroidStudioProjects/JOBrowser/app/src/main/res/drawable/ic_arrow_right.xml" value="0.1" />
+        <entry key="..\:/Users/Or/AndroidStudioProjects/JOBrowser/app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.12" />
+        <entry key="..\:/Users/Or/AndroidStudioProjects/JOBrowser/app/src/main/res/drawable/ic_baseline_file_upload_24.xml" value="0.12" />
+        <entry key="..\:/Users/Or/AndroidStudioProjects/JOBrowser/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.12" />
         <entry key="..\:/Users/Or/AndroidStudioProjects/JOBrowser/app/src/main/res/drawable/ic_folder.xml" value="0.1" />
         <entry key="..\:/Users/Or/AndroidStudioProjects/JOBrowser/app/src/main/res/drawable/ic_jobrowser.xml" value="0.1" />
         <entry key="..\:/Users/Or/AndroidStudioProjects/JOBrowser/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
@@ -20,7 +23,8 @@
         <entry key="..\:/Users/Or/AndroidStudioProjects/JOBrowser/app/src/main/res/layout/activity_create_worker_profile.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/Or/AndroidStudioProjects/JOBrowser/app/src/main/res/layout/activity_get_posts.xml" value="0.1164021164021164" />
         <entry key="..\:/Users/Or/AndroidStudioProjects/JOBrowser/app/src/main/res/layout/activity_list_view.xml" value="0.15989583333333332" />
-        <entry key="..\:/Users/Or/AndroidStudioProjects/JOBrowser/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/Or/AndroidStudioProjects/JOBrowser/app/src/main/res/layout/activity_main.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/Or/AndroidStudioProjects/JOBrowser/app/src/main/res/layout/activity_main2.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/Or/AndroidStudioProjects/JOBrowser/app/src/main/res/layout/activity_profile_page.xml" value="0.15989583333333332" />
         <entry key="..\:/Users/Or/AndroidStudioProjects/JOBrowser/app/src/main/res/layout/activity_search_posts.xml" value="0.15989583333333332" />
         <entry key="..\:/Users/Or/AndroidStudioProjects/JOBrowser/app/src/main/res/layout/activity_sign_up.xml" value="0.1" />
@@ -29,10 +33,15 @@
         <entry key="..\:/Users/Or/AndroidStudioProjects/JOBrowser/app/src/main/res/layout/child.xml" value="0.15989583333333332" />
         <entry key="..\:/Users/Or/AndroidStudioProjects/JOBrowser/app/src/main/res/layout/fragment_first.xml" value="0.15989583333333332" />
         <entry key="..\:/Users/Or/AndroidStudioProjects/JOBrowser/app/src/main/res/layout/fragment_login.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/Or/AndroidStudioProjects/JOBrowser/app/src/main/res/layout/fragment_profile.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/Or/AndroidStudioProjects/JOBrowser/app/src/main/res/layout/fragment_register.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/Or/AndroidStudioProjects/JOBrowser/app/src/main/res/layout/fragment_search.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/Or/AndroidStudioProjects/JOBrowser/app/src/main/res/layout/fragment_search2.xml" value="0.16145833333333334" />
         <entry key="..\:/Users/Or/AndroidStudioProjects/JOBrowser/app/src/main/res/layout/fragment_second.xml" value="0.15989583333333332" />
+        <entry key="..\:/Users/Or/AndroidStudioProjects/JOBrowser/app/src/main/res/layout/fragment_upload.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/Or/AndroidStudioProjects/JOBrowser/app/src/main/res/layout/parent.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/Or/AndroidStudioProjects/JOBrowser/app/src/main/res/layout/tree_view_node.xml" value="0.15989583333333332" />
+        <entry key="..\:/Users/Or/AndroidStudioProjects/JOBrowser/app/src/main/res/menu/nav_menu.xml" value="0.15989583333333332" />
         <entry key="..\:/Users/Or/AppData/Local/Android/Sdk/platforms/android-31/data/res/layout/simple_list_item_1.xml" value="0.1" />
       </map>
     </option>

@@ -13,29 +13,29 @@ public class ServerManager extends AppCompatActivity {
     public ServerManager() {
 
     }
-    private String clientID;
-    private boolean isBusiness;
+    private static String clientID;
+    private static boolean isBusiness;
     public void setClientID(String id)
     {
         this.clientID = id;
     }
-
     public String getClientID()
     {
-        return clientID;
+        return this.clientID;
     }
-/////////////
+    /////////////
     public void setIsBusiness(boolean isBusiness)
     {
         this.isBusiness = isBusiness;
     }
-
     public boolean getIsBusiness()
     {
-        return isBusiness;
+        return this.isBusiness;
     }
 
-    private final String SERVER_URL = "http://192.168.75.17:5000";
+
+
+    private final String SERVER_URL = "http://192.168.1.29:5000";
     private String postBodyString;
     private MediaType mediaType;
     private RequestBody requestBody;

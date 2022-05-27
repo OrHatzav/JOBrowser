@@ -1,55 +1,42 @@
 package com.example.jobrowser;
 
-
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
-import android.os.Bundle;
-
-import android.os.Handler;
-import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+
+import android.annotation.SuppressLint;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 
 import com.example.jobrowser.fragments.ProfileFragment;
 import com.example.jobrowser.fragments.SearchFragment;
 import com.example.jobrowser.fragments.UploadFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.base.Splitter;
 
-import org.json.JSONObject;
+import java.util.ArrayList;
+import java.util.Map;
 
-import java.io.Console;
-import java.io.IOException;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-
-import java.util.*;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity2 extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main2);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         bottomNavigationView.setOnNavigationItemSelectedListener((BottomNavigationView.OnNavigationItemSelectedListener) mOnNavigationItemSelectedListener);
-        getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new UploadFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new SearchFragment()).commit();
     }
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -59,9 +46,10 @@ public class MainActivity extends AppCompatActivity {
             Fragment frag = null;
 
             switch (item.getItemId()) {
-                case R.id.ic_upload:
-                    frag = new UploadFragment();
+                case R.id.ic_search:
+                    frag = new SearchFragment();
                     break;
+
                 case R.id.ic_profile:
                     frag = new ProfileFragment();
                     break;
