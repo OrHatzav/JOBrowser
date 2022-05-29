@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -78,16 +80,25 @@ public class CreateBusinessProfile extends AppCompatActivity {
 //                    Profile json = gson.fromJson("", (Type) Profile.class);
 
                     String email = extras.getString("email");
+                    Log.d("hh", email);
                     String password = extras.getString("password");
+                    Log.d("111", password);
                     String answer = request.getPosts("{\"NewProfile\": [\""+email+"\", \""+password + "\","+json + ", \"1\"]}", "/CreateProfile");
-                    request.setIsBusiness(true);
-                    request.setClientID(answer.substring(2,answer.length()-1));
+
+
+//                    request.setIsBusiness(true);
+//                    request.setClientID(answer.substring(2,answer.length()-1));
                     Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.sign_up_successfully), Toast.LENGTH_SHORT).show();
-//TODO: pass profile to profile fragment
-                    Intent i = new Intent(CreateBusinessProfile.this, MainActivity.class);
-//                    i.putExtra("profile", answer);
+
+                    Intent i = new Intent(CreateBusinessProfile.this, SignUp.class);
                     startActivity(i);
                     finish();
+
+//                    Intent i = new Intent(CreateBusinessProfile.this, MainActivity.class);
+//                    i.putExtra("profile", json);
+//                    i.putExtra("registeredNow", "business");
+//                    startActivity(i);
+//                    finish();
                 }
                 else
                 {
@@ -99,4 +110,5 @@ public class CreateBusinessProfile extends AppCompatActivity {
 
 
     }
+
 }

@@ -11,8 +11,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.jobrowser.BusinessProfile;
 import com.example.jobrowser.MainActivity2;
 import com.example.jobrowser.R;
+import com.example.jobrowser.WorkerProfile;
 import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.base.Splitter;
 
 import java.util.ArrayList;
@@ -74,37 +76,41 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
-        listView =view.findViewById(R.id.ListViewID);
+        listView = view.findViewById(R.id.ListViewID);
 
+        String answer;
         Bundle extras = getActivity().getIntent().getExtras();
-        String answer = extras.getString("profile");
-        Log.d("hh", answer);
+        if (extras.getString("registeredNow") == null) {
+            answer = extras.getString("profile");
+        } else {
+            answer = extras.getString("profile");
+        }
+
+        ArrayList<String> info = new ArrayList<>();
+
         Map<String, String> properties = Splitter.on(", ")
                 .withKeyValueSeparator(": ")
                 .split(answer);
-        ArrayList<String> info =  new ArrayList<>();
+
         for (Map.Entry<String, String> entry : properties.entrySet()) {
-            if(!entry.getKey().equals("{'_id")) {
-                info.add(entry.getKey().substring(1,entry.getKey().length()-1));
-                if(entry.getValue().charAt(entry.getValue().length()-1) == '}')
-                {
-                    info.add(entry.getValue().substring(1,entry.getValue().length()-2));
-                }
-                else {
+            if (!entry.getKey().equals("{'_id")) {
+                info.add(entry.getKey().substring(1, entry.getKey().length() - 1));
+                if (entry.getValue().charAt(entry.getValue().length() - 1) == '}') {
+                    info.add(entry.getValue().substring(1, entry.getValue().length() - 2));
+                } else {
                     info.add(entry.getValue().substring(1, entry.getValue().length() - 1));
                 }
 
             }
-
-
         }
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>
-                (getContext(), android.R.layout.simple_list_item_1, info);
 
-        listView.setDivider(null);
-        // DataBind ListView with items from ArrayAdapter
-        listView.setAdapter(arrayAdapter);
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>
+                    (getContext(), android.R.layout.simple_list_item_1, info);
 
-        return view;
+            listView.setDivider(null);
+            // DataBind ListView with items from ArrayAdapter
+            listView.setAdapter(arrayAdapter);
+
+            return view;
+        }
     }
-}

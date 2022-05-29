@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.base.Splitter;
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.codec.digest.DigestUtils;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -84,7 +85,7 @@ public class LoginFragment extends Fragment {
                 if (email.getText().toString().length() > 0 && password.getText().toString().length() >= 6) {
 
                     ServerManager request = new ServerManager();
-                    String answer = request.getPosts("{\"email\": \"" + email.getText().toString() + "\", \"password\": \"" + password.getText().toString() + "\"}", "/SignIn");
+                    String answer = request.getPosts("{\"email\": \"" + email.getText().toString() + "\", \"password\": \"" + md5Hash(password.getText().toString()) + "\"}", "/SignIn");
                     if (answer.equals("false")) {
                         Toast.makeText(getContext(), getContext().getString(R.string.email_or_password), Toast.LENGTH_SHORT).show();
                     } else {
@@ -96,7 +97,7 @@ public class LoginFragment extends Fragment {
                         int index = 0;
                         for (Map.Entry<String, String> entry : properties.entrySet()) {
 
-                            if (entry.getKey().equals("\"businessName\"")) {
+                            if (entry.getKey().equals("\"businessName\"") || entry.getKey().equals("\"BusinessName\"")) {
                                 isFound = true;
                             }
 
@@ -127,5 +128,9 @@ public class LoginFragment extends Fragment {
         return view;
 
 
+    }
+
+    public String md5Hash(String password)  {
+        return DigestUtils.md5Hex(password).toUpperCase();
     }
 }

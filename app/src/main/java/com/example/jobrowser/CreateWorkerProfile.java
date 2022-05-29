@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -44,14 +45,20 @@ public class CreateWorkerProfile extends AppCompatActivity {
                     String email = extras.getString("email");
                     String password = extras.getString("password");
                     String answer = request.getPosts("{\"NewProfile\": [\""+email+"\", \""+password + "\","+json + ", \"2\"]}", "/CreateProfile");
-                    request.setIsBusiness(false);
-                    request.setClientID(answer.substring(2,answer.length()-1));
+//                    request.setIsBusiness(false);
+//                    request.setClientID(answer.substring(2,answer.length()-1));
                     Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.sign_up_successfully), Toast.LENGTH_SHORT).show();
-//TODO: pass profile to profile fragment
-                    Intent i = new Intent(CreateWorkerProfile.this, MainActivity2.class);
-//                    i.putExtra("profile", answer);
+
+                    Intent i = new Intent(CreateWorkerProfile.this, LoginFragment.class);
                     startActivity(i);
                     finish();
+
+
+//                    Intent i = new Intent(CreateWorkerProfile.this, MainActivity2.class);
+//                    i.putExtra("profile", json);
+//                    i.putExtra("registeredNow", "worker");
+//                    startActivity(i);
+//                    finish();
                 }
                 else
                 {

@@ -108,6 +108,15 @@ public class GetPosts extends AppCompatActivity {
             }
         }
 
+        String id = "0";
+        for(int index = 0;index < root.getChildren().size(); index++)
+        {
+            if(root.getChildren().get(index).getValue().toString().equals("\"Business ID\""))
+            {
+                id = root.getChildren().get(index).getChildren().get(0).getValue().toString();
+            }
+        }
+
 
         LinearLayout layout = new LinearLayout(this);
         container.addView(layout);
@@ -122,23 +131,19 @@ public class GetPosts extends AppCompatActivity {
         layout.setLayoutParams(params);
 
 
+        final String fID = id;
+
         AndroidTreeView tView = new AndroidTreeView(this, root);
         tView.setDefaultAnimation(true);
         layout.addView(tView.getView());
-//TODO: make when press go to ProfilePage activity
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                for(int i = 0 ;i<array.length;i++)
-                {
-                    if(array[i].getValue().toString().equals("Business ID"))
-                    {
-                        Intent intent = new Intent(GetPosts.this, ProfilePage.class);
-                        intent.putExtra("id", ids[i] + "1");
-                        startActivity(intent);
-                        finish();
-                    }
+                if(!fID.equals("0")) {
+                    Intent intent = new Intent(GetPosts.this, ProfilePage.class);
+                    intent.putExtra("id", fID.substring(1, fID.length()-1));
+                    startActivity(intent);
+                    finish();
                 }
             }
         });

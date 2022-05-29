@@ -22,4 +22,9 @@ public class BusinessProfile {
         this.description = description;
     }
 
+    public String toString()
+    {
+        return businessName+ ", " + office+ ", " + lab+ ", " + factory+ ", " + workHome+ ", " + description;
+    }
+
 }

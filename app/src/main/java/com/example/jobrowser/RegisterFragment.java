@@ -16,7 +16,11 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.codec.digest.DigestUtils;
+
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 import okhttp3.Call;
@@ -86,12 +90,11 @@ public class RegisterFragment extends Fragment{
             public void onClick(View view) {
                 if(password.getText().toString().equals(repassword.getText().toString()))
                 {
-                    if(password.getText().toString().length()>= 6)
+                    if(password.getText().toString().length()>= 6 && password.getText().toString().length() <= 14)
                     {
                         if(worker.isChecked() || business.isChecked())
                         {
                             String answer = request.getPosts(email.getText().toString(),"/EmailExists");
-                            Log.d("hh", answer);
                             if(answer.equals("true"))
                             {
                                 Toast.makeText(getContext(), getContext().getString(R.string.email_exist), Toast.LENGTH_SHORT).show();
@@ -108,7 +111,8 @@ public class RegisterFragment extends Fragment{
                                     i = new Intent(getActivity(), CreateWorkerProfile.class);
                                 }
                                 i.putExtra("email", email.getText().toString());
-                                i.putExtra("password", password.getText().toString());
+                                String hashed = md5Hash(password.getText().toString());
+                                i.putExtra("password", hashed);
                                 startActivity(i);
                                 getActivity().finish();
                             }
@@ -120,7 +124,7 @@ public class RegisterFragment extends Fragment{
                     }
                     else
                     {
-                        Toast.makeText(getContext(), getContext().getString(R.string.password_6_letters), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getContext().getString(R.string.password_6_14_letters), Toast.LENGTH_SHORT).show();
                     }
                 }
                 else
@@ -132,63 +136,9 @@ public class RegisterFragment extends Fragment{
 
         return view;
     }
-    public static void ToastMemoryShort (Context context, String msg) {
 
-        Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
-        return;
+    public String md5Hash(String password)  {
+        return DigestUtils.md5Hex(password).toUpperCase();
     }
 
-
-//
-//    private RequestBody buildRequestBody(String msg) {
-//        postBodyString = msg;
-//        mediaType = MediaType.parse("text/plain");
-//        requestBody = RequestBody.create(postBodyString, mediaType);
-//        return requestBody;
-//    }
-//
-//
-//    private void postRequest(String message, String URL) {
-//
-//        try {
-//            RequestBody requestBody = buildRequestBody(message);
-//            OkHttpClient okHttpClient = new OkHttpClient();
-//            okhttp3.Request request = new Request
-//                    .Builder()
-//                    .post(requestBody)
-//                    .url(URL)
-//                    .build();
-//            okHttpClient.newCall(request).enqueue(new Callback() {
-//
-//                @Override
-//                public void onFailure(final Call call, final IOException e) {
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-////                            Toast.makeText(SignUp.class, "Something went wrong:" + " " + e.getMessage(), Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
-//
-//                }
-//
-//                @Override
-//                public void onResponse(Call call, final Response response) throws IOException {
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            try {
-//                                String answer = response.peekBody(2048).string();
-//                            } catch (IOException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//
-//                    });
-//                }
-//            });
-//        }
-//        catch (Exception ex) {
-//            Log.d("crash", "crash", ex);
-//        }
-//    }
 }

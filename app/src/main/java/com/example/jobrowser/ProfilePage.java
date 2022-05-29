@@ -3,6 +3,7 @@ package com.example.jobrowser;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -21,7 +22,7 @@ public class ProfilePage extends AppCompatActivity {
 
         ServerManager request = new ServerManager();
         Bundle extras = getIntent().getExtras();
-        String answer = request.getPosts(extras.getString("id"), "/GetProfile");
+        String answer = request.getPosts("\"0" + extras.getString("id") + "\"", "/GetProfile");
 
         Map<String, String> properties = Splitter.on(", ")
                 .withKeyValueSeparator(": ")
